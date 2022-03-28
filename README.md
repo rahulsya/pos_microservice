@@ -1,6 +1,6 @@
 # pos_microservice
 
-#env file atributes 
+## env file atributes 
 - PORT=4001
 - DB_HOST=localhost
 - DB_USERNAME=your db username
