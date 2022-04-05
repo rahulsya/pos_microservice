@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 // var usersRouter = require("./routes/users");
 const usersRouter = require("./app/user/router");
 const refreshToken = require("./app/refresh_token/router");
+const productRouter = require("./app/product/router");
 
 var app = express();
 
@@ -21,4 +22,5 @@ app.use("/", indexRouter);
 // app.use("/users", usersRouter);
 app.use("/users", usersRouter);
 app.use("/refresh_token", refreshToken);
+app.use("/products", productRouter);
 module.exports = app;
