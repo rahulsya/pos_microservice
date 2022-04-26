@@ -9,9 +9,11 @@ var indexRouter = require("./routes/index");
 const usersRouter = require("./app/user/router");
 const refreshToken = require("./app/refresh_token/router");
 const productRouter = require("./app/product/router");
+const cors = require("cors");
 
 var app = express();
 
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
