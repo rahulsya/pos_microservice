@@ -22,7 +22,7 @@ module.exports = {
         allowNull: false,
       },
       role: {
-        values: ["owner", "karyawan"],
+        values: ["owner", "karyawan", "customer"],
         type: Sequelize.ENUM,
         allowNull: false,
       },
