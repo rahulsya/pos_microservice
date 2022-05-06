@@ -9,6 +9,7 @@ var indexRouter = require("./routes/index");
 const usersRouter = require("./app/user/router");
 const refreshToken = require("./app/refresh_token/router");
 const productRouter = require("./app/product/router");
+const couriersRouter = require("./app/couriers/router");
 const cors = require("cors");
 
 var app = express();
@@ -25,4 +26,5 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/refresh_token", refreshToken);
 app.use("/products", productRouter);
+app.use("/courier", couriersRouter);
 module.exports = app;
