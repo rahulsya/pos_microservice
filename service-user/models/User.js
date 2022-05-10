@@ -41,6 +41,10 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue("password", bcrypt.hashSync(value, 10));
         },
       },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: true,
+      },
       role: {
         type: DataTypes.ENUM,
         values: ["owner", "karyawan"],
