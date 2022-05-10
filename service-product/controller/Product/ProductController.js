@@ -33,6 +33,22 @@ const index = async (req, res) => {
   }
 };
 
+const product = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const products = await Product.findByPk(id, { include: [Category] });
+    return res.json({
+      status: "success",
+      data: products,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
 const create = async (req, res, next) => {
   try {
     const data = req.body;
@@ -174,4 +190,4 @@ const destroy = async (req, res) => {
     });
   }
 };
-module.exports = { index, create, update, destroy };
+module.exports = { index, create, update, destroy, product };
