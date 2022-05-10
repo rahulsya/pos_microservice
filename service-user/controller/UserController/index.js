@@ -125,7 +125,7 @@ const Login = async (req, res) => {
       });
     }
 
-    const { id, name, role } = user;
+    const { id, name, role, address } = user;
 
     return res.json({
       status: "success",
@@ -134,6 +134,7 @@ const Login = async (req, res) => {
         name,
         email: user.email,
         role,
+        address,
       },
     });
   } catch (error) {
