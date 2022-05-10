@@ -5,6 +5,7 @@ const os = require("os");
 const { productController } = require("../controller");
 
 router.get("/", productController.index);
+router.get("/:id", productController.product);
 router.post(
   "/",
   multer({ dest: os.tmpdir() }).single("image"),
