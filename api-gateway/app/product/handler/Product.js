@@ -21,6 +21,22 @@ const index = async (req, res) => {
   }
 };
 
+const product = async (req, res) => {
+  try {
+    const product = await api.get(`/product/${req.params.id}`);
+    const { data } = product;
+    return res.json(data);
+  } catch (error) {
+    if (error.code === "ECONNREFUSED") {
+      return res
+        .status(500)
+        .json({ status: "error", message: "service unavaiable" });
+    }
+    const { status, data } = error.response;
+    return res.status(status).json(data);
+  }
+};
+
 const store = async (req, res) => {
   try {
     const { name, price, stock, category_id } = req.body;
@@ -48,9 +64,8 @@ const store = async (req, res) => {
         .status(500)
         .json({ status: "error", message: "service unavaiable" });
     }
-    // console.log(error);
-    const { status, data } = error.response;
-    return res.status(status).json(data);
+    // const { status, data } = error.response;
+    return res.status(400).json({ status: "error", message: "internal Error" });
   }
 };
 
@@ -60,9 +75,8 @@ const update = async (req, res) => {
     const form = new FormData();
     form.append("name", name);
     form.append("price", price);
-    form.append("stock", stock);
+    form.append("amount_stock", stock);
     form.append("category_id", category_id);
-    console.log(form);
     if (req.file) {
       form.append(
         "image",
@@ -104,4 +118,24 @@ const destroy = async (req, res) => {
     return res.status(status).json(data);
   }
 };
-module.exports = { index, store, update, destroy };
+
+const updateStock = async (req, res) => {
+  try {
+    const { amount } = req.body;
+
+    const updateStockProduct = await api.put(`/product/${req.params.id}`, {
+      amount_stock: amount,
+    });
+    const { data } = updateStockProduct;
+    return res.json(data);
+  } catch (error) {
+    if (error.code === "ECONNREFUSED") {
+      return res
+        .status(500)
+        .json({ status: "error", message: "service unavaiable" });
+    }
+    const { status, data } = error.response;
+    return res.status(status).json(data);
+  }
+};
+module.exports = { index, store, update, destroy, updateStock, product };
