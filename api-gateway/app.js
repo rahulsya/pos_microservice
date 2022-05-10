@@ -8,7 +8,8 @@ var indexRouter = require("./routes/index");
 // var usersRouter = require("./routes/users");
 const usersRouter = require("./app/user/router");
 const refreshToken = require("./app/refresh_token/router");
-const productRouter = require("./app/product/router");
+const productRouter = require("./app/product/Productrouter");
+const categoryRouter = require("./app/product/Categoryrouter");
 const couriersRouter = require("./app/couriers/router");
 const cors = require("cors");
 
@@ -26,5 +27,6 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/refresh_token", refreshToken);
 app.use("/products", productRouter);
+app.use("/categories", categoryRouter);
 app.use("/courier", couriersRouter);
 module.exports = app;
