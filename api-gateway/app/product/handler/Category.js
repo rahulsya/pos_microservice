@@ -6,10 +6,7 @@ const api = apiAdapter(URL_SERVICE_PRODUCT);
 const index = async (req, res) => {
   try {
     const categories = await api.get("/category");
-    return res.json({
-      status: "success",
-      data: categories.data.data,
-    });
+    return res.json(categories.data);
   } catch (error) {
     if (error.code === "ECONNREFUSED") {
       return res
