@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       courier_service: {
+        type: DataTypes.STRING(50),
+        allowNull: true,
+      },
+      shipping_estimation: {
         type: DataTypes.STRING(25),
         allowNull: true,
       },
@@ -50,5 +54,12 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
+
+  Order.associate = (models) => {
+    Order.hasMany(models.OrderItems, {
+      foreignKey: "order_id",
+      allowNull: false,
+    });
+  };
   return Order;
 };
