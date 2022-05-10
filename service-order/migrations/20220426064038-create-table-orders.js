@@ -25,6 +25,10 @@ module.exports = {
         allowNull: false,
       },
       courier_service: {
+        type: Sequelize.STRING(50),
+        allowNull: true,
+      },
+      shipping_estimation: {
         type: Sequelize.STRING(25),
         allowNull: true,
       },
