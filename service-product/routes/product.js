@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const os = require("os");
-const { productController } = require("../controller");
+const { productController, ProductstockController } = require("../controller");
 
 router.get("/", productController.index);
 router.get("/:id", productController.product);
@@ -17,5 +17,10 @@ router.put(
   productController.update
 );
 router.delete("/:id", productController.destroy);
+router.post(
+  "/stock",
+  multer().none(),
+  ProductstockController.manageProductStock
+);
 
 module.exports = router;

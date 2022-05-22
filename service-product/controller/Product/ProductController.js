@@ -19,6 +19,7 @@ const index = async (req, res) => {
   try {
     const products = await Product.findAll({
       include: [Category],
+      order: [["createdAt", "DESC"]],
     });
 
     return res.json({
@@ -190,4 +191,5 @@ const destroy = async (req, res) => {
     });
   }
 };
+
 module.exports = { index, create, update, destroy, product };
