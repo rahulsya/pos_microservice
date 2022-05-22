@@ -98,8 +98,9 @@ const update = async (req, res) => {
         .status(500)
         .json({ status: "error", message: "service unavaiable" });
     }
-    const { status, data } = error.response;
-    return res.status(status).json(data);
+    // const { status, data } = error.response;
+    // return res.status(status).json(data);
+    return res.status(400).json({ status: "error", message: "internal Error" });
   }
 };
 
@@ -121,11 +122,9 @@ const destroy = async (req, res) => {
 
 const updateStock = async (req, res) => {
   try {
-    const { amount } = req.body;
+    const { payload } = req.body;
 
-    const updateStockProduct = await api.put(`/product/${req.params.id}`, {
-      amount_stock: amount,
-    });
+    const updateStockProduct = await api.post(`/product/stock`, { payload });
     const { data } = updateStockProduct;
     return res.json(data);
   } catch (error) {
