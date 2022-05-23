@@ -47,16 +47,23 @@ const order = async (req, res) => {
 
 const store = async (req, res) => {
   try {
-    const { products, total_amount, total_shipping } = req.body;
+    const {
+      products,
+      total_amount,
+      total_shipping,
+      courier_service,
+      shipping_estimation,
+      user_id,
+    } = req.body;
     const invoinceNumber = FormatInvoiceNumber();
-    console.log(req.body);
     const order = await Order.create({
       user_id: 1,
       invoice_number: invoinceNumber,
-      total_shipping: total_shipping,
+      total_shipping,
       total_price: total_amount,
-      courier_service: null,
-      shipping_estimation: null,
+      courier_service,
+      shipping_estimation,
+      payment_status: "PROCESS",
       status: "PROCESS",
     });
 
@@ -72,6 +79,7 @@ const store = async (req, res) => {
 
     return res.json({
       status: "success",
+      message: "order created",
     });
   } catch (error) {
     return res.status(400).json({
