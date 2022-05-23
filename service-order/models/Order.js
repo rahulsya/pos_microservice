@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      courier_number: {
+        type: DataTypes.INTEGER(30),
+        allowNull: true,
+      },
       invoice_number: {
         type: DataTypes.STRING(25),
         allowNull: false,
@@ -30,6 +34,11 @@ module.exports = (sequelize, DataTypes) => {
       shipping_estimation: {
         type: DataTypes.STRING(25),
         allowNull: true,
+      },
+      payment_status: {
+        values: ["SUBMIT", "PROCESS", "COMPLETED", "CANCEL"],
+        type: DataTypes.ENUM,
+        allowNull: false,
       },
       status: {
         values: ["SUBMIT", "PROCESS", "COMPLETED", "CANCEL"],

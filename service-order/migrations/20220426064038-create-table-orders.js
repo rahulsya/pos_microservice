@@ -12,6 +12,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      courier_number: {
+        type: Sequelize.INTEGER(30),
+        allowNull: true,
+      },
       invoice_number: {
         type: Sequelize.STRING(25),
         allowNull: false,
@@ -31,6 +35,12 @@ module.exports = {
       shipping_estimation: {
         type: Sequelize.STRING(25),
         allowNull: true,
+      },
+      payment_status: {
+        values: ["SUBMIT", "PROCESS", "COMPLETED", "CANCEL"],
+        type: Sequelize.ENUM,
+        defaultValue: "PROCESS",
+        allowNull: false,
       },
       status: {
         values: ["SUBMIT", "PROCESS", "COMPLETED", "CANCEL"],
