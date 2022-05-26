@@ -36,14 +36,23 @@ module.exports = {
         type: Sequelize.STRING(25),
         allowNull: true,
       },
+      shipping_destination: {
+        type: Sequelize.STRING(),
+        allowNull: true,
+      },
       payment_status: {
-        values: ["SUBMIT", "PROCESS", "COMPLETED", "CANCEL"],
+        values: ["SUBMIT", "PROCESS", "SUCCESS", "CANCEL"],
         type: Sequelize.ENUM,
         defaultValue: "PROCESS",
         allowNull: false,
       },
+      payment_method: {
+        type: Sequelize.ENUM,
+        values: ["CASH", "NONCASH"],
+        allowNull: false,
+      },
       status: {
-        values: ["SUBMIT", "PROCESS", "COMPLETED", "CANCEL"],
+        values: ["SUBMIT", "PROCESS", "CANCEL", "SUCCESS"],
         type: Sequelize.ENUM,
         allowNull: false,
       },

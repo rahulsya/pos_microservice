@@ -50,6 +50,29 @@ const product = async (req, res) => {
   }
 };
 
+const productsById = async (req, res) => {
+  try {
+    const { productsId } = req.query;
+    const id = productsId || [];
+    const products = await Product.findAll({
+      include: [Category],
+      order: [["createdAt", "DESC"]],
+      where: {
+        id: id,
+      },
+    });
+    return res.json({
+      status: "success",
+      data: products,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
 const create = async (req, res, next) => {
   try {
     const data = req.body;
@@ -192,4 +215,4 @@ const destroy = async (req, res) => {
   }
 };
 
-module.exports = { index, create, update, destroy, product };
+module.exports = { index, create, update, destroy, product, productsById };

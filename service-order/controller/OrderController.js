@@ -14,7 +14,9 @@ const FormatInvoiceNumber = () => {
 
 const index = async (req, res) => {
   try {
-    const orders = await Order.findAll();
+    const orders = await Order.findAll({
+      order: [["createdAt", "DESC"]],
+    });
     return res.json({
       status: "success",
       data: orders,
@@ -54,17 +56,21 @@ const store = async (req, res) => {
       courier_service,
       shipping_estimation,
       user_id,
+      payment_method,
+      shipping_destination,
     } = req.body;
     const invoinceNumber = FormatInvoiceNumber();
     const order = await Order.create({
-      user_id: 1,
+      user_id: user_id,
       invoice_number: invoinceNumber,
       total_shipping,
       total_price: total_amount,
       courier_service,
       shipping_estimation,
+      shipping_destination,
       payment_status: "PROCESS",
       status: "PROCESS",
+      payment_method,
     });
 
     if (order) {
@@ -89,4 +95,32 @@ const store = async (req, res) => {
   }
 };
 
-module.exports = { index, store, order };
+const update = async (req, res) => {
+  try {
+    const getOrder = await Order.findByPk(req.params.id);
+    if (!getOrder) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Order Not Found" });
+    }
+
+    await Order.update(req.body, {
+      where: {
+        id: getOrder.id,
+      },
+    });
+
+    const order = await Order.findByPk(getOrder.id);
+    return res.json({
+      status: "success",
+      data: order,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { index, store, order, update };

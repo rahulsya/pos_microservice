@@ -5,6 +5,7 @@ const os = require("os");
 const { productController, ProductstockController } = require("../controller");
 
 router.get("/", productController.index);
+router.get("/product_orders", productController.productsById);
 router.get("/:id", productController.product);
 router.post(
   "/",

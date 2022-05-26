@@ -6,7 +6,7 @@ const manageProductStock = async (req, res) => {
 
     if (payload.length) {
       for (let i = 0; i < payload.length; i++) {
-        const getProduct = await Product.findByPk(payload[i].product_id);
+        const getProduct = await Product.findByPk(payload[i].id);
         if (getProduct) {
           const { amount_stock } = getProduct;
           await Product.update(
