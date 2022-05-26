@@ -3,4 +3,5 @@ const Login = require("./login");
 const Logout = require("./logout");
 const Update = require("./update");
 const AllUsers = require("./allUsers");
-module.exports = { Register, Login, AllUsers, Logout, Update };
+const getUsers = require("./getuser");
+module.exports = { Register, Login, AllUsers, Logout, Update, getUsers };
