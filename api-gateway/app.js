@@ -11,6 +11,7 @@ const refreshToken = require("./app/refresh_token/router");
 const productRouter = require("./app/product/Productrouter");
 const categoryRouter = require("./app/product/Categoryrouter");
 const couriersRouter = require("./app/couriers/router");
+const orderRouter = require("./app/order/router");
 const cors = require("cors");
 
 var app = express();
@@ -29,4 +30,5 @@ app.use("/refresh_token", refreshToken);
 app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 app.use("/courier", couriersRouter);
+app.use("/order", orderRouter);
 module.exports = app;
