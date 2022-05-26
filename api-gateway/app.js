@@ -12,6 +12,7 @@ const productRouter = require("./app/product/Productrouter");
 const categoryRouter = require("./app/product/Categoryrouter");
 const couriersRouter = require("./app/couriers/router");
 const orderRouter = require("./app/order/router");
+const paymentRouter = require("./app/payment/router");
 const cors = require("cors");
 
 var app = express();
@@ -31,4 +32,5 @@ app.use("/products", productRouter);
 app.use("/categories", categoryRouter);
 app.use("/courier", couriersRouter);
 app.use("/order", orderRouter);
+app.use("/payment", paymentRouter);
 module.exports = app;
