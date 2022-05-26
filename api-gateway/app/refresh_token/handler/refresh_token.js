@@ -24,7 +24,7 @@ module.exports = async (req, res) => {
 
     jwt.verify(refresh_token, JWT_SECRET_REFRESH_TOKEN, (error, decode) => {
       if (error) {
-        return res.status(400).json({
+        return res.status(403).json({
           status: "error",
           message: error.message,
         });
