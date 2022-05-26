@@ -3,6 +3,7 @@ const multer = require("multer");
 const { Product } = require("./handler");
 const os = require("os");
 router.get("/", Product.index);
+router.get("/product_orders", Product.productsById);
 router.get("/:id", Product.product);
 router.post("/", multer({ dest: os.tmpdir() }).single("image"), Product.store);
 router.put(

@@ -7,7 +7,7 @@ const api = apiAdapter(URL_SERVICE_PRODUCT);
 
 const index = async (req, res) => {
   try {
-    const product = await api.get("/product");
+    const product = await api.get(`/product`);
     const { data } = product;
     return res.json(data);
   } catch (error) {
@@ -25,6 +25,27 @@ const product = async (req, res) => {
   try {
     const product = await api.get(`/product/${req.params.id}`);
     const { data } = product;
+    return res.json(data);
+  } catch (error) {
+    if (error.code === "ECONNREFUSED") {
+      return res
+        .status(500)
+        .json({ status: "error", message: "service unavaiable" });
+    }
+    const { status, data } = error.response;
+    return res.status(status).json(data);
+  }
+};
+
+const productsById = async (req, res) => {
+  try {
+    const { productsId } = req.query;
+    const products = await api.get(`/product/product_orders`, {
+      params: {
+        productsId,
+      },
+    });
+    const { data } = products;
     return res.json(data);
   } catch (error) {
     if (error.code === "ECONNREFUSED") {
@@ -123,7 +144,6 @@ const destroy = async (req, res) => {
 const updateStock = async (req, res) => {
   try {
     const { payload } = req.body;
-
     const updateStockProduct = await api.post(`/product/stock`, { payload });
     const { data } = updateStockProduct;
     return res.json(data);
@@ -137,4 +157,12 @@ const updateStock = async (req, res) => {
     return res.status(status).json(data);
   }
 };
-module.exports = { index, store, update, destroy, updateStock, product };
+module.exports = {
+  index,
+  store,
+  update,
+  destroy,
+  updateStock,
+  product,
+  productsById,
+};
