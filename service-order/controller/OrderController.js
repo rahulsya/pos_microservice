@@ -1,4 +1,5 @@
 const { Order, OrderItems } = require("../models");
+const { Op } = require("sequelize");
 
 const FormatInvoiceNumber = () => {
   let Newdate = new Date();
@@ -14,8 +15,22 @@ const FormatInvoiceNumber = () => {
 
 const index = async (req, res) => {
   try {
+    const { status = "", date = "" } = req.query;
+
+    let criteria = {};
+    if (date) {
+      criteria = {
+        ...criteria,
+        createdAt: { [Op.gte]: new Date(date) },
+      };
+    }
+    if (status !== "all") {
+      criteria = { ...criteria, status };
+    }
+
     const orders = await Order.findAll({
       order: [["createdAt", "DESC"]],
+      where: criteria,
     });
     return res.json({
       status: "success",
@@ -86,6 +101,7 @@ const store = async (req, res) => {
     return res.json({
       status: "success",
       message: "order created",
+      data: order,
     });
   } catch (error) {
     return res.status(400).json({
