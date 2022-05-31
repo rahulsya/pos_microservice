@@ -5,7 +5,7 @@ const api = apiAdapter(URL_SERVICE_ORDER);
 
 const order = async (req, res) => {
   try {
-    const order = await api.get(`/order`);
+    const order = await api.get(`/order`, { params: req.query });
     return res.json(order.data);
   } catch (error) {
     if (error.code === "ECONNREFUSED") {
