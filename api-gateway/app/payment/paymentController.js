@@ -2,7 +2,7 @@ const midtransClient = require("midtrans-client");
 const { PAYMENT_PRODUCTION, CLIENT_KEY, SERVER_KEY } = process.env;
 
 let snap = new midtransClient.Snap({
-  isProduction: PAYMENT_PRODUCTION,
+  isProduction: false,
   clientKey: CLIENT_KEY,
   serverKey: SERVER_KEY,
 });
@@ -25,7 +25,9 @@ const intiatePayment = async (req, res) => {
       },
     };
 
+    console.log(req.body);
     let response = await snap.createTransaction(parameter);
+
     return res.json(response);
   } catch (error) {
     if (error.code === "ECONNREFUSED") {
