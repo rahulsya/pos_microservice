@@ -7,7 +7,7 @@ const api = apiAdapter(URL_SERVICE_PRODUCT);
 
 const index = async (req, res) => {
   try {
-    const product = await api.get(`/product`);
+    const product = await api.get(`/product`, { params: req.query });
     const { data } = product;
     return res.json(data);
   } catch (error) {

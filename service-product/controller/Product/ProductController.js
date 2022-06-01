@@ -1,4 +1,5 @@
 const { Product, Category } = require("../../models");
+const sequelize = require("sequelize");
 const fs = require("fs");
 
 const readFileUpload = (file) => {
@@ -17,9 +18,40 @@ const readFileUpload = (file) => {
 
 const index = async (req, res) => {
   try {
+    let {
+      category = "",
+      price = "",
+      stock = "",
+      product_status = "DESC",
+      limit = 8,
+      page = 1,
+    } = req.query;
+
+    let offset = (page - 1) * limit;
+
+    let productSort = [];
+    let criteria = {};
+    if (category !== "all") {
+      criteria = { ...criteria, category_id: category };
+    }
+
+    if (price) {
+      productSort = [...productSort, ["price", price]];
+    }
+    if (stock) {
+      // const sortStock = ;
+      productSort = [...productSort, ["amount_stock", stock]];
+    }
+    if (product_status) {
+      productSort = [...productSort, ["createdAt", product_status]];
+    }
+
     const products = await Product.findAll({
       include: [Category],
-      order: [["createdAt", "DESC"]],
+      order: productSort,
+      where: criteria,
+      limit,
+      offset,
     });
 
     return res.json({
