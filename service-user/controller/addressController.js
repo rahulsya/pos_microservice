@@ -7,7 +7,24 @@ const index = async (req, res) => {
       where: {
         user_id: id,
       },
+      order: [["createdAt", "DESC"]],
     });
+
+    return res.json({
+      status: "success",
+      address,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      error: error.message,
+    });
+  }
+};
+
+const DetailAddress = async (req, res) => {
+  try {
+    const address = await Address.findByPk(req.params.id);
 
     return res.json({
       status: "success",
@@ -75,4 +92,4 @@ const destroy = async (req, res) => {
   }
 };
 
-module.exports = { store, index, update, destroy };
+module.exports = { store, index, update, destroy, DetailAddress };

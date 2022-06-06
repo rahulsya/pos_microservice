@@ -23,7 +23,7 @@ const GetUser = async (req, res) => {
   try {
     const id = req.params.id;
     const user = await User.findByPk(id, {
-      attributes: ["id", "name", "email", "role", "address"],
+      attributes: ["id", "name", "email", "role", "phone_number"],
     });
 
     if (!user) {
@@ -125,7 +125,7 @@ const Login = async (req, res) => {
       });
     }
 
-    const { id, name, role, address } = user;
+    const { id, name, role } = user;
 
     return res.json({
       status: "success",
@@ -134,7 +134,6 @@ const Login = async (req, res) => {
         name,
         email: user.email,
         role,
-        address,
       },
     });
   } catch (error) {
