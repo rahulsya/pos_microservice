@@ -41,14 +41,14 @@ module.exports = (sequelize, DataTypes) => {
           this.setDataValue("password", bcrypt.hashSync(value, 10));
         },
       },
-      address: {
-        type: DataTypes.STRING,
+      phone_number: {
+        type: DataTypes.STRING(12),
         allowNull: true,
       },
       role: {
         type: DataTypes.ENUM,
-        values: ["owner", "karyawan"],
-        defaultValue: "karyawan",
+        values: ["admin", "customer"],
+        defaultValue: "customer",
         allowNull: false,
       },
       createdAt: {
@@ -69,5 +69,13 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: true,
     }
   );
+
+  User.associate = (models) => {
+    User.hasMany(models.Address, {
+      foreignKey: "user_id",
+      allowNull: false,
+    });
+  };
+
   return User;
 };

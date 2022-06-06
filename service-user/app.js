@@ -7,6 +7,7 @@ const cors = require("cors");
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 const refreshTokenRouter = require("./routes/refresh-token");
+const addressRouter = require("./routes/address");
 
 var app = express();
 
@@ -20,5 +21,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/refresh_token", refreshTokenRouter);
+app.use("/address", addressRouter);
 
 module.exports = app;

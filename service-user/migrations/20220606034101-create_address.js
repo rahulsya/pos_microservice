@@ -2,32 +2,22 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("address", {
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
+      user_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
       name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      phone_number: {
-        type: Sequelize.STRING(12),
-        allowNull: true,
-      },
-      role: {
-        values: ["admin", "customer"],
-        type: Sequelize.ENUM,
+      detail_address: {
+        type: Sequelize.TEXT,
         allowNull: false,
       },
       created_at: {
@@ -39,9 +29,19 @@ module.exports = {
         allowNull: false,
       },
     });
+
+    await queryInterface.addConstraint("address", {
+      type: "foreign key",
+      name: "ADDRES_USER_ID", //name is fredomm
+      fields: ["user_id"],
+      references: {
+        table: "users",
+        field: "id",
+      },
+    });
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("address");
   },
 };
