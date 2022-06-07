@@ -5,7 +5,12 @@ const api = apiAdapter(URL_SERVICE_ORDER);
 
 const order = async (req, res) => {
   try {
-    const order = await api.get(`/order`, { params: req.query });
+    const user_id = req.user?.role === "customer" ? req.user?.id : null;
+
+    const order = await api.get(`/order`, {
+      params: { ...req.query, user_id },
+    });
+
     return res.json(order.data);
   } catch (error) {
     if (error.code === "ECONNREFUSED") {
@@ -49,4 +54,20 @@ const createOrder = async (req, res) => {
   }
 };
 
-module.exports = { createOrder, order, orderDetail };
+const updateOrder = async (req, res) => {
+  try {
+    const update = await api.put(`/order/${req.params.id}`, req.body);
+    return res.json(update.data);
+  } catch (error) {
+    if (error.code === "ECONNREFUSED") {
+      return res
+        .status(500)
+        .json({ status: "error", message: "service unavaiable" });
+    }
+    console.log(error);
+    const { status, data } = error.response;
+    return res.status(status).json(data);
+  }
+};
+
+module.exports = { createOrder, order, orderDetail, updateOrder };
