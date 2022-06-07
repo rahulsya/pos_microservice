@@ -12,6 +12,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      address_id: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       courier_number: {
         type: Sequelize.INTEGER(30),
         allowNull: true,

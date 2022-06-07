@@ -15,7 +15,9 @@ const FormatInvoiceNumber = () => {
 
 const index = async (req, res) => {
   try {
-    const { status = "", date = "" } = req.query;
+    const { status = "", date = "", user_id = "" } = req.query;
+
+    console.log(req.query);
 
     let criteria = {};
     if (date) {
@@ -26,6 +28,10 @@ const index = async (req, res) => {
     }
     if (status !== "all") {
       criteria = { ...criteria, status };
+    }
+
+    if (user_id) {
+      criteria = { ...criteria, user_id };
     }
 
     const orders = await Order.findAll({
@@ -66,6 +72,7 @@ const store = async (req, res) => {
   try {
     const {
       products,
+      address_id,
       total_amount,
       total_shipping,
       courier_service,
@@ -77,6 +84,7 @@ const store = async (req, res) => {
     const invoinceNumber = FormatInvoiceNumber();
     const order = await Order.create({
       user_id: user_id,
+      address_id,
       invoice_number: invoinceNumber,
       total_shipping,
       total_price: total_amount,
