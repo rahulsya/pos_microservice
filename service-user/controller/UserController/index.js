@@ -88,7 +88,7 @@ const Update = async (req, res) => {
     await User.update({ ...data }, { where: { id } });
     const updatedData = await User.findOne({
       where: { id },
-      attributes: ["id", "name", "email", "role"],
+      attributes: ["id", "name", "email", "role", "phone_number"],
     });
     return res.json({
       status: "success",
