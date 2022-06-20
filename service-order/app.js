@@ -6,6 +6,7 @@ var logger = require("morgan");
 
 var indexRouter = require("./routes/index");
 const orderRouter = require("./routes/orders");
+const reportsRouter = require("./routes/reports");
 const cors = require("cors");
 
 var app = express();
@@ -19,5 +20,6 @@ app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/order", orderRouter);
+app.use("/reports", reportsRouter);
 
 module.exports = app;
