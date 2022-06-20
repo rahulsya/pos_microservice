@@ -38,4 +38,20 @@ const manageProductStock = async (req, res) => {
   }
 };
 
-module.exports = { manageProductStock };
+const countProduct = async (req, res) => {
+  try {
+    const count = await Product.count();
+
+    return res.json({
+      status: "success",
+      product: count,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      message: error.message,
+    });
+  }
+};
+
+module.exports = { manageProductStock, countProduct };
