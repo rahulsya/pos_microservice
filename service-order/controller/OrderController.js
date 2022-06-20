@@ -1,5 +1,5 @@
 const { Order, OrderItems } = require("../models");
-const { Op } = require("sequelize");
+const { Op, fn, col, where } = require("sequelize");
 
 const FormatInvoiceNumber = () => {
   let Newdate = new Date();
@@ -15,9 +15,13 @@ const FormatInvoiceNumber = () => {
 
 const index = async (req, res) => {
   try {
-    const { status = "", date = "", user_id = "" } = req.query;
-
-    console.log(req.query);
+    const {
+      invoice_number = "",
+      status = "",
+      date = "",
+      user_id = "",
+      month = "",
+    } = req.query;
 
     let criteria = {};
     if (date) {
@@ -32,6 +36,16 @@ const index = async (req, res) => {
 
     if (user_id) {
       criteria = { ...criteria, user_id };
+    }
+    if (invoice_number) {
+      criteria = { ...criteria, invoice_number };
+    }
+    if (month) {
+      getMonth = new Date(month).getMonth() + 1;
+      criteria = {
+        ...criteria,
+        createdAt: where(fn("month", col("created_at")), getMonth),
+      };
     }
 
     const orders = await Order.findAll({
