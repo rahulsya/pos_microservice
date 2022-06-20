@@ -157,6 +157,22 @@ const updateStock = async (req, res) => {
     return res.status(status).json(data);
   }
 };
+
+const productCount = async (req, res) => {
+  try {
+    const count = await api.get(`/product/count`);
+    const { data } = count;
+    return res.json(data);
+  } catch (error) {
+    if (error.code === "ECONNREFUSED") {
+      return res
+        .status(500)
+        .json({ status: "error", message: "service unavaiable" });
+    }
+    const { status, data } = error.response;
+    return res.status(status).json(data);
+  }
+};
 module.exports = {
   index,
   store,
@@ -165,4 +181,5 @@ module.exports = {
   updateStock,
   product,
   productsById,
+  productCount,
 };
