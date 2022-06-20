@@ -13,7 +13,7 @@ const intiatePayment = async (req, res) => {
 
     let parameter = {
       transaction_details: {
-        order_id: order.id,
+        order_id: order.invoice,
         gross_amount: order.total_price,
       },
       credit_card: {
