@@ -128,7 +128,9 @@ const create = async (req, res, next) => {
           name: data.name,
           image_url: `images/${fileName}`,
           category_id: data.category_id,
-          price: data.price,
+          base_price: data.price,
+          discount: data?.discount,
+          price: data?.discount ? data.price - data?.discount : data.price,
           amount_stock: data.stock,
         });
 
@@ -167,6 +169,16 @@ const update = async (req, res, next) => {
       });
     }
 
+    const updateData = {
+      ...payload,
+      price: payload?.discount
+        ? payload.price - payload?.discount
+        : payload.base_price,
+      // base_price as price
+      base_price: payload.price,
+      discount: payload?.discount,
+    };
+
     if (req.file) {
       const { tmp_path, fileName, target_path } = readFileUpload(req.file);
 
@@ -181,8 +193,9 @@ const update = async (req, res, next) => {
         if (fs.existsSync(currentImage)) {
           fs.unlinkSync(`public/${product.image_url}`);
         }
+
         await Product.update(
-          { ...payload, image_url: `images/${fileName}` },
+          { ...updateData, image_url: `images/${fileName}` },
           { where: { id: product_id } }
         );
         return res.json({
@@ -195,7 +208,7 @@ const update = async (req, res, next) => {
       });
     } else {
       await Product.update(
-        { ...payload },
+        { ...updateData },
         {
           where: {
             id: product_id,

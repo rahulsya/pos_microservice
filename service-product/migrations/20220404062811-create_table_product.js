@@ -20,6 +20,14 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
+      base_price: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      discount: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+      },
       amount_stock: {
         type: Sequelize.INTEGER,
         allowNull: false,

@@ -60,10 +60,20 @@ const productsById = async (req, res) => {
 
 const store = async (req, res) => {
   try {
-    const { name, price, stock, category_id } = req.body;
+    const { name, price, stock, category_id, discount } = req.body;
     const form = new FormData();
+    if (!req.file) {
+      return res.status(400).json({
+        status: "error",
+        message: "field image is required",
+      });
+    }
+
     form.append("name", name);
     form.append("price", price);
+    if (discount) {
+      form.append("discount", discount);
+    }
     form.append("stock", stock);
     form.append("category_id", category_id);
     form.append(
@@ -92,12 +102,15 @@ const store = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { name, price, stock, category_id } = req.body;
+    const { name, price, stock, category_id, discount } = req.body;
     const form = new FormData();
     form.append("name", name);
     form.append("price", price);
     form.append("amount_stock", stock);
     form.append("category_id", category_id);
+    if (discount) {
+      form.append("discount", discount);
+    }
     if (req.file) {
       form.append(
         "image",
@@ -119,9 +132,9 @@ const update = async (req, res) => {
         .status(500)
         .json({ status: "error", message: "service unavaiable" });
     }
-    // const { status, data } = error.response;
-    // return res.status(status).json(data);
-    return res.status(400).json({ status: "error", message: "internal Error" });
+    const { status, data } = error.response;
+    return res.status(status).json(data);
+    // return res.status(400).json({ status: "error", message: "internal Error" });
   }
 };
 
