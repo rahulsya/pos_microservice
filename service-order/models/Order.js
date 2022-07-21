@@ -15,6 +15,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: true,
       },
+      payment_id: {
+        type: DataTypes.STRING(25),
+        allowNull: true,
+      },
       courier_number: {
         type: DataTypes.INTEGER(30),
         allowNull: true,

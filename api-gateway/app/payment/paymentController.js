@@ -25,7 +25,6 @@ const intiatePayment = async (req, res) => {
       },
     };
 
-    console.log(req.body);
     let response = await snap.createTransaction(parameter);
 
     return res.json(response);
@@ -41,4 +40,22 @@ const intiatePayment = async (req, res) => {
   }
 };
 
-module.exports = { intiatePayment };
+const checkStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const paymentStatus = await snap.transaction.status(id);
+    return res.json({
+      status: "success",
+      data: paymentStatus,
+    });
+  } catch (error) {
+    if (error.code === "ECONNREFUSED") {
+      return res
+        .status(500)
+        .json({ status: "error", message: "service unavaiable" });
+    }
+    return res.json(error.response);
+  }
+};
+
+module.exports = { intiatePayment, checkStatus };

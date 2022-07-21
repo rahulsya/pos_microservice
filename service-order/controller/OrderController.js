@@ -87,6 +87,7 @@ const store = async (req, res) => {
     const {
       products,
       address_id,
+      payment_id,
       total_amount,
       total_shipping,
       courier_service,
@@ -101,6 +102,7 @@ const store = async (req, res) => {
     const order = await Order.create({
       user_id: user_id,
       address_id,
+      payment_id,
       invoice_number: invoinceNumber,
       total_shipping,
       total_price: total_amount,
@@ -118,6 +120,7 @@ const store = async (req, res) => {
           product_id: item.id,
           order_id: order.id,
           quantity: item.qty,
+          item_price: item.price,
         }))
       );
     }

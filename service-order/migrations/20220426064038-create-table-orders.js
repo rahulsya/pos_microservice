@@ -16,6 +16,10 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      payment_id: {
+        allowNull: true,
+        type: Sequelize.STRING(25),
+      },
       courier_number: {
         type: Sequelize.INTEGER(30),
         allowNull: true,

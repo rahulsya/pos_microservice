@@ -19,6 +19,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      item_price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
       createdAt: {
         //field aliases
         field: "created_at",

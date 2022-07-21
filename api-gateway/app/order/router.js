@@ -8,9 +8,9 @@ const {
   updateOrder,
 } = require("./handler/Order");
 
-router.post("/", multer().none(), createOrder);
+router.post("/", verifyToken, multer().none(), createOrder);
 router.get("/", verifyToken, order);
-router.get("/:id", orderDetail);
-router.put("/:id", multer().none(), updateOrder);
+router.get("/:id", verifyToken, orderDetail);
+router.put("/:id", verifyToken, multer().none(), updateOrder);
 
 module.exports = router;
