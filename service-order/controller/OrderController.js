@@ -94,6 +94,8 @@ const store = async (req, res) => {
       user_id,
       payment_method,
       shipping_destination,
+      payment_status,
+      status,
     } = req.body;
     const invoinceNumber = FormatInvoiceNumber();
     const order = await Order.create({
@@ -105,8 +107,8 @@ const store = async (req, res) => {
       courier_service,
       shipping_estimation,
       shipping_destination,
-      payment_status: "PROCESS",
-      status: "PROCESS",
+      payment_status: payment_status ? payment_status : "PROCESS",
+      status: status ? status : "PROCESS",
       payment_method,
     });
 
