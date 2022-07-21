@@ -20,6 +20,14 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      base_price: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      discount: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+      },
       amount_stock: {
         type: DataTypes.INTEGER,
         allowNull: false,
