@@ -45,6 +45,35 @@ const GetUser = async (req, res) => {
   }
 };
 
+const GetUserByEmail = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const user = await User.findOne({
+      where: {
+        email,
+      },
+      attributes: ["id", "name", "email", "role", "phone_number"],
+    });
+
+    if (!user) {
+      return res.status(404).json({
+        status: "error",
+        message: "user not found",
+      });
+    }
+
+    return res.json({
+      status: "success",
+      data: user,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      status: "error",
+      error: error.message,
+    });
+  }
+};
+
 const Register = async (req, res) => {
   try {
     const data = req.body;
@@ -66,6 +95,7 @@ const Update = async (req, res) => {
   try {
     const id = req.params.id;
     let data = req.body;
+    console.log(data);
     const user = await User.findByPk(id);
     if (!user) {
       return res.status(404).json({
@@ -172,4 +202,12 @@ const Logout = async (req, res) => {
     });
   }
 };
-module.exports = { Register, Login, GetAllUser, GetUser, Logout, Update };
+module.exports = {
+  Register,
+  Login,
+  GetAllUser,
+  GetUser,
+  Logout,
+  Update,
+  GetUserByEmail,
+};

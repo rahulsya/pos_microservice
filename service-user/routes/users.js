@@ -15,4 +15,5 @@ router.post("/create", multer().none(), UserController.Register);
 router.put("/update/:id", multer().none(), UserController.Update);
 router.post("/login", multer().none(), UserController.Login);
 router.post("/logout", multer().none(), UserController.Logout);
+router.post("/forget-password", multer().none(), UserController.GetUserByEmail);
 module.exports = router;
