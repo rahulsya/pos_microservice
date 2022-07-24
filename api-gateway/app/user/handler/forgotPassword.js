@@ -24,10 +24,16 @@ const requestEmail = async (req, res) => {
       to: req.body.email,
       subject: "Reset Password Account POS Microservices",
       html: `
-            <h1>Pos micro</h1>
+            <h2>Hi, ${req.body.email.split("@")[0]}</h2>
+            <h3>Pos microservice</h3>
             </hr>
-            <p>This is link to reset password</p> </br>
-            <a href="${URL_CLIENT_APP}/reset-password/${token}">Reset Password</a>
+            <p>You have requested your password to be reset. Please click the following link to change your password:</p>
+            <a style="font-size:15px;line-height: 15px;color: #fff;background: #00a2db;text-decoration: none;padding: 12px 28px;margin: 18px 0" href="${URL_CLIENT_APP}/reset-password/${token}">Reset Password</a>
+            <br/>
+            <p>If you did not request this, please ignore this email</p>
+            <br/>
+            <p>thanks, Pos microservices,</p>
+
         `,
     };
 
