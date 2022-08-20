@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon ./bin/www",
+    "migration":"npx sequelize db:migrate",
+    "seed":"npx sequelize db:seed --seed .seeders/20220509042711-categories.js && npx sequelize db:seed --seed .seeders/20220509042645-product.js",
+    "env-dev":"cp .env.example .env"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
