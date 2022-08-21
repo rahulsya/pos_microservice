@@ -27,7 +27,10 @@ const index = async (req, res) => {
     if (date) {
       criteria = {
         ...criteria,
-        createdAt: { [Op.gte]: new Date(date) },
+        // createdAt: { [Op.gte]: new Date(date) },
+        createdAt: {
+          [Op.startsWith]: date,
+        },
       };
     }
     if (status !== "all") {
